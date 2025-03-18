@@ -52,6 +52,16 @@
                     >
                         Inventory
                     </v-list-item>
+                    <v-list-item
+                        class="px-2"
+                        key="deliveries"
+                        to="/deliveries/deliveries"
+                        @click="changeUrl()"
+                        color="primary"
+                        style="font-weight:700;"
+                    >
+                        Delivery
+                    </v-list-item>
                 </v-list>
             </v-navigation-drawer>
         </div>
@@ -119,6 +129,13 @@ export default {
                 description: 'Inventory을 관리하는 화면입니다.', 
                 key: 'inventories', 
                 route: '/inventories/inventories',
+                ImageUrl: '',
+            },
+            { 
+                title: 'Delivery', 
+                description: 'Delivery을 관리하는 화면입니다.', 
+                key: 'deliveries', 
+                route: '/deliveries/deliveries',
                 ImageUrl: '',
             },
             

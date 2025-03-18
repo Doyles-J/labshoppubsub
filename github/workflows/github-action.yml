@@ -31,6 +31,7 @@ jobs:
         run: |
           mvn clean package -f ./order/pom.xml
           mvn clean package -f ./inventory/pom.xml
+          mvn clean package -f ./delivery/pom.xml
 
       - name: Docker Build and push for Order
         uses: docker/build-push-action@v4
@@ -51,4 +52,14 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}/inventory:latest
             ghcr.io/${{ github.repository }}/inventory:${{ github.ref_name }}
+            
+      - name: Docker Build and push for Delivery
+        uses: docker/build-push-action@v4
+        with:
+          context: ./delivery
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}/delivery:latest
+            ghcr.io/${{ github.repository }}/delivery:${{ github.ref_name }}
             

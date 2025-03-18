@@ -1,6 +1,6 @@
 <template>
     <div>
-    <h1>Order</h1>
+    <h1>Delivery</h1>
         <v-row>
             <v-card
                 class="mx-auto"
@@ -26,7 +26,7 @@
                         color="primary"
                         style="font-weight:500; font-size:20px; padding:15px; border:solid 2px; max-width:250px; overflow:hidden"
                     >
-                        Order 등록
+                        Delivery 등록
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -43,17 +43,11 @@
                             
                             
                             
-                            
-                            
-                            
                         </v-list-item-title>
 
                         <v-list-item-subtitle style="font-size:25px; font-weight:700;">
                             [ Id :  {{data.id }} ] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            [ ProductId :  {{data.productId }} ] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            [ Qty :  {{data.qty }} ] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             [ CustomerId :  {{data.customerId }} ] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            [ Amount :  {{data.amount }} ] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             [ Address :  {{data.address }} ] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </v-list-item-subtitle>
 
@@ -67,7 +61,7 @@
         <v-col style="margin-bottom:40px;">
             <div class="text-center">
                 <v-dialog v-model="openDialog" width="500">
-                    <OrderOrder :offline="offline"  :isNew="true" :editMode="true" v-model="newValue" @add="append" v-if="tick"/>
+                    <DeliveryDelivery :offline="offline"  :isNew="true" :editMode="true" v-model="newValue" @add="append" v-if="tick"/>
                     <v-btn
                         class="gs-close-btn"
                         @click="closeDialog()"
@@ -85,12 +79,12 @@
 
 <script>
     const axios = require('axios').default;
-    import OrderOrder from './../OrderOrder.vue';
+    import DeliveryDelivery from './../DeliveryDelivery.vue';
 
     export default {
-        name: 'OrderOrderManager',
+        name: 'DeliveryDeliveryManager',
         components: {
-            OrderOrder,
+            DeliveryDelivery,
         },
         props: {
             offline: Boolean,
@@ -109,15 +103,12 @@
                 return;
             } 
 
-            var temp = await axios.get(axios.fixUrl('/orders'))
-            temp.data._embedded.orders.map(obj => obj.id=obj._links.self.href.split("/")[obj._links.self.href.split("/").length - 1])
-            this.values = temp.data._embedded.orders;
+            var temp = await axios.get(axios.fixUrl('/deliveries'))
+            temp.data._embedded.deliveries.map(obj => obj.id=obj._links.self.href.split("/")[obj._links.self.href.split("/").length - 1])
+            this.values = temp.data._embedded.deliveries;
             
             this.newValue = {
-                'productId': '',
-                'qty': 0,
                 'customerId': '',
-                'amount': 0,
                 'address': '',
             }
         },

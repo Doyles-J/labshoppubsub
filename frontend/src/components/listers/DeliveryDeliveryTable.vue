@@ -25,7 +25,7 @@
                         </v-fab-transition>
                     </template>
 
-                    <OrderOrder :offline="offline"  :isNew="true" :editMode="true" v-model="newValue" @add="append" v-if="tick"/>
+                    <DeliveryDelivery :offline="offline"  :isNew="true" :editMode="true" v-model="newValue" @add="append" v-if="tick"/>
                 
                     <v-btn
                         class="gs-close-btn"
@@ -44,12 +44,12 @@
 
 <script>
     const axios = require('axios').default;
-    import OrderOrder from './../OrderOrder.vue';
+    import DeliveryDelivery from './../DeliveryDelivery.vue';
 
     export default {
-        name: 'OrderOrderManager',
+        name: 'DeliveryDeliveryManager',
         components: {
-            OrderOrder,
+            DeliveryDelivery,
         },
         props: {
             offline: Boolean,
@@ -61,13 +61,10 @@
             headers: 
                 [
                     { text: "id", value: "id" },
-                    { text: "productId", value: "productId" },
-                    { text: "qty", value: "qty" },
                     { text: "customerId", value: "customerId" },
-                    { text: "amount", value: "amount" },
                     { text: "address", value: "address" },
                 ],
-            order : [],
+            delivery : [],
             newValue: {},
             tick : true,
             openDialog : false,
@@ -78,15 +75,12 @@
                 return;
             }
 
-            var temp = await axios.get(axios.fixUrl('/orders'))
-            temp.data._embedded.orders.map(obj => obj.id=obj._links.self.href.split("/")[obj._links.self.href.split("/").length - 1])
-            this.values = temp.data._embedded.orders;
+            var temp = await axios.get(axios.fixUrl('/deliveries'))
+            temp.data._embedded.deliveries.map(obj => obj.id=obj._links.self.href.split("/")[obj._links.self.href.split("/").length - 1])
+            this.values = temp.data._embedded.deliveries;
 
             this.newValue = {
-                'productId': '',
-                'qty': 0,
                 'customerId': '',
-                'amount': 0,
                 'address': '',
             }
         },

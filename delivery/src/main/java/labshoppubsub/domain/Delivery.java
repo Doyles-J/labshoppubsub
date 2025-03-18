@@ -6,41 +6,35 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.*;
-import labshoppubsub.OrderApplication;
-import labshoppubsub.domain.OrderPlaced;
+import labshoppubsub.DeliveryApplication;
+import labshoppubsub.domain.DeliveryAdded;
 import lombok.Data;
 
 @Entity
-@Table(name = "Order_table")
+@Table(name = "Delivery_table")
 @Data
 //<<< DDD / Aggregate Root
-public class Order {
+public class Delivery {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String productId;
-
-    private Integer qty;
-
     private String customerId;
-
-    private Double amount;
 
     private String address;
 
     @PostPersist
     public void onPostPersist() {
-        OrderPlaced orderPlaced = new OrderPlaced(this);
-        orderPlaced.publishAfterCommit();
+        DeliveryAdded deliveryAdded = new DeliveryAdded(this);
+        deliveryAdded.publishAfterCommit();
     }
 
-    public static OrderRepository repository() {
-        OrderRepository orderRepository = OrderApplication.applicationContext.getBean(
-            OrderRepository.class
+    public static DeliveryRepository repository() {
+        DeliveryRepository deliveryRepository = DeliveryApplication.applicationContext.getBean(
+            DeliveryRepository.class
         );
-        return orderRepository;
+        return deliveryRepository;
     }
 }
 //>>> DDD / Aggregate Root

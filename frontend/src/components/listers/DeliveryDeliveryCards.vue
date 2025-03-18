@@ -8,7 +8,7 @@
         >
             <v-row>
                 <v-list-item class="d-flex" style="background-color: white;">
-                    <h1 class="align-self-center ml-3">Order</h1>
+                    <h1 class="align-self-center ml-3">Delivery</h1>
                     <div class="secondary-text-color" style="margin-left:30px;"></div>
                 </v-list-item>
             </v-row>
@@ -16,7 +16,7 @@
         <v-col style="margin-bottom:40px;">
             <div class="text-center">
                 <v-dialog v-model="openDialog" width="500">
-                    <OrderOrder :offline="offline"  :isNew="true" :editMode="true" v-model="newValue" 
+                    <DeliveryDelivery :offline="offline"  :isNew="true" :editMode="true" v-model="newValue" 
                             @add="append" v-if="tick"/>
                     <v-btn
                         class="gs-close-btn"
@@ -54,7 +54,7 @@
                                 color="primary"
                                 style="font-weight:500; font-size:20px; padding:15px; border:solid 2px; max-width:250px; overflow:hidden"
                             >
-                                Order 등록
+                                Delivery 등록
                             </v-btn>
                         </v-card-actions>
                     </v-card>
@@ -63,7 +63,7 @@
         </v-col>
         <v-row class="ma-0 pa-0">
             <v-col class="pa-4" cols="12" sm="6" md="3" v-for="(value, index) in values" :key="index">
-                <OrderOrder :offline="offline"
+                <DeliveryDelivery :offline="offline"
                     v-model="values[index]"
                     @delete="remove"/>
             </v-col>
@@ -74,12 +74,12 @@
 <script>
 
     const axios = require('axios').default;
-    import OrderOrder from './../OrderOrder.vue';
+    import DeliveryDelivery from './../DeliveryDelivery.vue';
 
     export default {
-        name: 'OrderOrderManager',
+        name: 'DeliveryDeliveryManager',
         components: {
-            OrderOrder,
+            DeliveryDelivery,
         },
         props: {
             offline: Boolean
@@ -97,14 +97,11 @@
                 return;
             } 
 
-            var temp = await axios.get(axios.fixUrl('/orders'))
-            me.values = temp.data._embedded.orders;
+            var temp = await axios.get(axios.fixUrl('/deliveries'))
+            me.values = temp.data._embedded.deliveries;
             
             me.newValue = {
-                'productId': '',
-                'qty': 0,
                 'customerId': '',
-                'amount': 0,
                 'address': '',
             }
         },

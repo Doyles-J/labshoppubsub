@@ -36,5 +36,12 @@ public class Delivery {
         );
         return deliveryRepository;
     }
+
+    public static void addDelivery(OrderPlaced orderPlaced) {
+        Delivery delivery = new Delivery();
+        delivery.setCustomerId(orderPlaced.getCustomerId);
+        delivery.setAddress(orderPlaced.getAddress);
+        repository().save(delivery);
+    }
 }
 //>>> DDD / Aggregate Root
